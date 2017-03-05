@@ -22,3 +22,22 @@ Run Kafka console consumer
 ```
 kafka-console-consumer --bootstrap-server <YOUR_HOST>:9092 --topic test
 ```
+
+Run Kafka console producer
+```
+kafka-console-producer --broker-list <YOUR_HOST>:9092 --topic test
+test1
+test2
+test3
+```
+
+Verify messages been received in console consumer
+```
+test1
+test2
+test3
+```
+
+Credits
+-------
+Originally cloned and inspired by https://github.com/spotify/docker-kafka
