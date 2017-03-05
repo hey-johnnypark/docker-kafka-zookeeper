@@ -17,7 +17,11 @@ fi
 # Set the external host and port
 if [ ! -z "$ADVERTISED_HOST" ]; then
     echo "advertised host: $ADVERTISED_HOST"
-    sed -r -i "s/#(advertised.host.name)=(.*)/\1=$ADVERTISED_HOST/g" $KAFKA_HOME/config/server.properties
+    # Uncomment advertised.listeners
+    sed -r -i 's/^(#)(advertised.listeners)/\2/g' $KAFKA_HOME/config/server.properties
+
+    # Replace your.host.name with $ADVERTISED_HOST
+    sed -r -i "s/your.host.name/$ADVERTISED_HOST/g" $KAFKA_HOME/config/server.properties
 fi
 if [ ! -z "$ADVERTISED_PORT" ]; then
     echo "advertised port: $ADVERTISED_PORT"
