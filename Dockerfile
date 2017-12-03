@@ -19,7 +19,7 @@ RUN tar xfz /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz -C /opt && rm /tmp/zookeeper
 ADD conf/zoo.cfg $ZOOKEEPER_HOME/conf
 
 ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 0.11.0.2
+ENV KAFKA_VERSION 1.0.0
 ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 ENV KAFKA_DOWNLOAD_URL https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
