@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get clean
 
 
-ENV ZOOKEEPER_VERSION 3.4.6
+ENV ZOOKEEPER_VERSION 3.4.11
 ENV ZOOKEEPER_HOME /opt/zookeeper-"$ZOOKEEPER_VERSION"
 
 RUN wget -q http://ftp.cixug.es/apache/zookeeper/zookeeper-"$ZOOKEEPER_VERSION"/zookeeper-"$ZOOKEEPER_VERSION".tar.gz -O /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
