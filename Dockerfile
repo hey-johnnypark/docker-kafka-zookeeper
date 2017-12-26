@@ -16,7 +16,7 @@ ENV ZOOKEEPER_HOME /opt/zookeeper-"$ZOOKEEPER_VERSION"
 RUN wget -q http://ftp.cixug.es/apache/zookeeper/zookeeper-"$ZOOKEEPER_VERSION"/zookeeper-"$ZOOKEEPER_VERSION".tar.gz -O /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
 RUN ls -l /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
 RUN tar xfz /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz -C /opt && rm /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
-ADD conf/zoo.cfg $ZOOKEEPER_HOME/conf
+ADD assets/conf/zoo.cfg $ZOOKEEPER_HOME/conf
 
 ENV SCALA_VERSION 2.12
 ENV KAFKA_VERSION 1.0.0
@@ -26,11 +26,11 @@ ENV KAFKA_DOWNLOAD_URL https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/ka
 RUN wget -q $KAFKA_DOWNLOAD_URL -O /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 RUN tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /opt && rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
-ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
-ADD scripts/start-zookeeper.sh /usr/bin/start-zookeeper.sh
+ADD assets/scripts/start-kafka.sh /usr/bin/start-kafka.sh
+ADD assets/scripts/start-zookeeper.sh /usr/bin/start-zookeeper.sh
 
 # Supervisor config
-ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
+ADD assets/supervisor/kafka.conf assets/supervisor/zookeeper.conf /etc/supervisor/conf.d/
 
 # 2181 is zookeeper, 9092 is kafka
 EXPOSE 2181 9092
