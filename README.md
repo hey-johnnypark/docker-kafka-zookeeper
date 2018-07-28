@@ -13,25 +13,25 @@ Successfully built 9b382d40bccc
 Run container
 -------------
 ```
-docker run -p 2181:2181 -p 9092:9092 -e ADVERTISED_HOST=<YOUR_HOST> 9b382d40bccc
+docker run -p 2181:2181 -p 9092:9092 -e ADVERTISED_HOST=localhost 9b382d40bccc
 ```
 
 Test
 ----
 Run Kafka console consumer
 ```
-kafka-console-consumer --bootstrap-server <YOUR_HOST>:9092 --topic test
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test
 ```
 
 Run Kafka console producer
 ```
-kafka-console-producer --broker-list <YOUR_HOST>:9092 --topic test
+kafka-console-producer --broker-list localhost:9092 --topic test
 test1
 test2
 test3
 ```
 
-Verify messages been received in console consumer
+Verify that messages have been received in console consumer
 ```
 test1
 test2
