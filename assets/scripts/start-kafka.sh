@@ -16,7 +16,7 @@ fi
 
 # Set the external host and port
 if [ ! -z "$ADVERTISED_HOST_CMD" ]; then
-    ADVERTISED_HOST=`eval $ADVERTISED_HOST_CMD`
+    export ADVERTISED_HOST=`eval $ADVERTISED_HOST_CMD`
 fi
 
 if [ ! -z "$ADVERTISED_HOST" ]; then
