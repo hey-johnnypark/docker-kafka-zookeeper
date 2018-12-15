@@ -15,6 +15,10 @@ if [ ! -z "$HELIOS_PORT_kafka" ]; then
 fi
 
 # Set the external host and port
+if [ ! -z "$ADVERTISED_HOST_CMD" ]; then
+    export ADVERTISED_HOST=`eval $ADVERTISED_HOST_CMD`
+fi
+
 if [ ! -z "$ADVERTISED_HOST" ]; then
     echo "advertised host: $ADVERTISED_HOST"
     # Uncomment advertised.listeners
