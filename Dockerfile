@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get clean
 
 
-ENV ZOOKEEPER_VERSION 3.4.12
+ENV ZOOKEEPER_VERSION 3.4.13
 ENV ZOOKEEPER_HOME /opt/zookeeper-"$ZOOKEEPER_VERSION"
 
 RUN wget -q http://ftp.cixug.es/apache/zookeeper/zookeeper-"$ZOOKEEPER_VERSION"/zookeeper-"$ZOOKEEPER_VERSION".tar.gz -O /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
@@ -19,7 +19,7 @@ RUN tar xfz /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz -C /opt && rm /tmp/zookeeper
 ADD assets/conf/zoo.cfg $ZOOKEEPER_HOME/conf
 
 ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 2.0.1
+ENV KAFKA_VERSION 2.1.0
 ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 ENV KAFKA_DOWNLOAD_URL https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
