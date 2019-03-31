@@ -1,6 +1,6 @@
 # Kafka and Zookeeper
 
-FROM java:openjdk-8-jre
+FROM openjdk:8-jre
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -19,7 +19,7 @@ RUN tar xfz /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz -C /opt && rm /tmp/zookeeper
 ADD assets/conf/zoo.cfg $ZOOKEEPER_HOME/conf
 
 ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 2.1.0
+ENV KAFKA_VERSION 2.1.1
 ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 ENV KAFKA_DOWNLOAD_URL https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
