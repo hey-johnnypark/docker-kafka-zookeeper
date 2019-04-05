@@ -1,14 +1,7 @@
 # Kafka and Zookeeper
+FROM alpine:3.9.2
 
-FROM openjdk:8-jre
-
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update && \
-    apt-get install -y wget supervisor && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get clean
-
+RUN apk add --update openjdk8-jre supervisor bash
 
 ENV ZOOKEEPER_VERSION 3.4.13
 ENV ZOOKEEPER_HOME /opt/zookeeper-"$ZOOKEEPER_VERSION"
@@ -30,9 +23,10 @@ ADD assets/scripts/start-kafka.sh /usr/bin/start-kafka.sh
 ADD assets/scripts/start-zookeeper.sh /usr/bin/start-zookeeper.sh
 
 # Supervisor config
-ADD assets/supervisor/kafka.conf assets/supervisor/zookeeper.conf /etc/supervisor/conf.d/
+ADD assets/supervisor/kafka.ini assets/supervisor/zookeeper.ini /etc/supervisor.d/
 
 # 2181 is zookeeper, 9092 is kafka
 EXPOSE 2181 9092
 
 CMD ["supervisord", "-n"]
+
