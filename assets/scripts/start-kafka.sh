@@ -78,6 +78,7 @@ if [ -n "$AUTO_CREATE_TOPICS" ]; then
     if grep -q "auto.create.topics.enable" "$propertiesFile"; then
         sed -r -i "s/(auto.create.topics.enable=(.*)/\1=$AUTO_CREATE_TOPICS/g" "$propertiesFile"
     else
+        echo "" >> "$propertiesFile"
         echo "auto.create.topics.enable=$AUTO_CREATE_TOPICS" >> "$propertiesFile"
     fi
 fi
