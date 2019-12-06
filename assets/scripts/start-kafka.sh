@@ -31,7 +31,7 @@ if [ -n "$ADVERTISED_HOST" ]; then
 fi
 if [ -n "$ADVERTISED_PORT" ]; then
     echo "advertised port: $ADVERTISED_PORT"
-    sed -r -i "s/#(advertised.listeners)=(.*):/\1=\2:$ADVERTISED_PORT/g" "$propertiesFile"
+    sed -r -i "s/(.*)(advertised.listeners)=(.*):.*/\2=\3:$ADVERTISED_PORT/g" "$propertiesFile"
 fi
 
 if [ -n "$NUM_PARTITIONS" ]; then
