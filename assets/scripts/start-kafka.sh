@@ -34,6 +34,11 @@ if [ -n "$ADVERTISED_PORT" ]; then
     sed -r -i "s/(.*)(advertised.listeners)=(.*):.*/\2=\3:$ADVERTISED_PORT/g" "$propertiesFile"
 fi
 
+if [ -n "$ADVERTISED_LISTENERS" ]; then
+    echo "advertised listerners: $ADVERTISED_LISTENERS"
+    sed -r -i "s|^(.*)(advertised.listeners).*|\2=${ADVERTISED_LISTENERS}|g" "$propertiesFile"
+fi
+
 if [ -n "$NUM_PARTITIONS" ]; then
     echo "Num Partitions: $NUM_PARTITIONS"
     sed -r -i "s/#(num.partitions)=(.*)/\1=$NUM_PARTITIONS/g" "$propertiesFile"
