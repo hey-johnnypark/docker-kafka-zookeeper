@@ -1,4 +1,4 @@
-Docker Kafka Zookeeper ![Build Status](https://img.shields.io/docker/cloud/build/gwleclerc/kafka?style=flat-square)
+Docker Kafka Zookeeper [![Build Status](https://img.shields.io/docker/cloud/build/gwleclerc/kafka?style=flat-square)](https://hub.docker.com/r/gwleclerc/kafka)
 ======================
 Docker image for Kafka message broker including Zookeeper
 
