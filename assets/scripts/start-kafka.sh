@@ -11,38 +11,31 @@
 # Configure advertised host/port if we run in helios
 propertiesFile="$KAFKA_HOME/config/server.properties"
 
-if [ -n "$HELIOS_PORT_kafka" ]; then
-    ADVERTISED_HOST=$(echo "$HELIOS_PORT_kafka" | cut -d':' -f 1 | xargs -n 1 dig +short | tail -n 1)
-    ADVERTISED_PORT=$(echo "$HELIOS_PORT_kafka" | cut -d':' -f 2)
-fi
-
-# Set the external host and port
-if [ -n "$ADVERTISED_HOST_CMD" ]; then
-    ADVERTISED_HOST=$(eval "$ADVERTISED_HOST_CMD")
-fi
-
-if [ -n "$ADVERTISED_HOST" ]; then
-    echo "advertised host: $ADVERTISED_HOST"
-    # Uncomment advertised.listeners
-    sed -r -i 's/^(#)(advertised.listeners)/\2/g' "$propertiesFile"
-
-    # Replace your.host.name with $ADVERTISED_HOST
-    sed -r -i "s/your.host.name/$ADVERTISED_HOST/g" "$propertiesFile"
-fi
-if [ -n "$ADVERTISED_PORT" ]; then
-    echo "advertised port: $ADVERTISED_PORT"
-    sed -r -i "s/(.*)(advertised.listeners)=(.*):.*/\2=\3:$ADVERTISED_PORT/g" "$propertiesFile"
+if [ -n "$LISTENERS" ]; then
+    echo "listerners: $LISTENERS"
+    sed -r -i "s|^(#?)(listeners).*|\2=${LISTENERS}|g" "$propertiesFile"
 fi
 
 if [ -n "$ADVERTISED_LISTENERS" ]; then
-    echo "advertised listerners: $ADVERTISED_LISTENERS"
-    sed -r -i "s|^(.*)(advertised.listeners).*|\2=${ADVERTISED_LISTENERS}|g" "$propertiesFile"
+    echo "advertised.listerners: $ADVERTISED_LISTENERS"
+    sed -r -i "s|^(#?)(advertised.listeners).*|\2=${ADVERTISED_LISTENERS}|g" "$propertiesFile"
 fi
 
-if [ -n "$NUM_PARTITIONS" ]; then
-    echo "Num Partitions: $NUM_PARTITIONS"
-    sed -r -i "s/#(num.partitions)=(.*)/\1=$NUM_PARTITIONS/g" "$propertiesFile"
+if [ -n "$LISTENER_SECURITY_PROTOCOL_MAP" ]; then
+    echo "listener.security.protocol.map: $LISTENER_SECURITY_PROTOCOL_MAP"
+    sed -r -i "s|^(#?)(listener.security.protocol.map).*|\2=${LISTENER_SECURITY_PROTOCOL_MAP}|g" "$propertiesFile"
 fi
+
+if [ -n "$INTER_BROKER_LISTENER_NAME" ]; then
+    echo "inter.broker.listener.name: $INTER_BROKER_LISTENER_NAME"
+    if grep -q "inter.broker.listener.name" "$propertiesFile"; then
+        sed -r -i "s/(inter.broker.listener.name=(.*)/\1=$INTER_BROKER_LISTENER_NAME/g" "$propertiesFile"
+    else
+        echo "" >> "$propertiesFile"
+        echo "inter.broker.listener.name=$INTER_BROKER_LISTENER_NAME" >> "$propertiesFile"
+    fi
+fi
+
 
 # Set the zookeeper chroot
 if [ -n "$ZK_CHROOT" ]; then
@@ -63,17 +56,17 @@ fi
 
 # Allow specification of log retention policies
 if [ -n "$LOG_RETENTION_HOURS" ]; then
-    echo "log retention hours: $LOG_RETENTION_HOURS"
+    echo "log.retention.hours: $LOG_RETENTION_HOURS"
     sed -r -i "s/(log.retention.hours)=(.*)/\1=$LOG_RETENTION_HOURS/g" "$propertiesFile"
 fi
 if [ -n "$LOG_RETENTION_BYTES" ]; then
-    echo "log retention bytes: $LOG_RETENTION_BYTES"
+    echo "log.retention.bytes: $LOG_RETENTION_BYTES"
     sed -r -i "s/#(log.retention.bytes)=(.*)/\1=$LOG_RETENTION_BYTES/g" "$propertiesFile"
 fi
 
 # Configure the default number of log partitions per topic
 if [ -n "$NUM_PARTITIONS" ]; then
-    echo "default number of partition: $NUM_PARTITIONS"
+    echo "number.partitions: $NUM_PARTITIONS"
     sed -r -i "s/(num.partitions)=(.*)/\1=$NUM_PARTITIONS/g" "$propertiesFile"
 fi
 
