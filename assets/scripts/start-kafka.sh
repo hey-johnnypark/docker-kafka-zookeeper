@@ -7,6 +7,7 @@
 # * LOG_RETENTION_HOURS: the minimum age of a log file in hours to be eligible for deletion (default is 168, for 1 week)
 # * LOG_RETENTION_BYTES: configure the size at which segments are pruned from the log, (default is 1073741824, for 1GB)
 # * NUM_PARTITIONS: configure the default number of log partitions per topic
+# * SOCKET_REQUEST_MAX_BYTES: the max number of bytes allowed per request
 
 # Configure advertised host/port if we run in helios
 propertiesFile="$KAFKA_HOME/config/server.properties"
@@ -29,10 +30,20 @@ fi
 if [ -n "$INTER_BROKER_LISTENER_NAME" ]; then
     echo "inter.broker.listener.name: $INTER_BROKER_LISTENER_NAME"
     if grep -q "inter.broker.listener.name" "$propertiesFile"; then
-        sed -r -i "s/(inter.broker.listener.name=(.*)/\1=$INTER_BROKER_LISTENER_NAME/g" "$propertiesFile"
+        sed -r -i "s/(#?)(inter.broker.listener.name)=(.*)/\2=$INTER_BROKER_LISTENER_NAME/g" "$propertiesFile"
     else
         echo "" >> "$propertiesFile"
         echo "inter.broker.listener.name=$INTER_BROKER_LISTENER_NAME" >> "$propertiesFile"
+    fi
+fi
+
+if [ -n "$SOCKET_REQUEST_MAX_BYTES" ]; then
+    echo "socket.request.max.bytes: $SOCKET_REQUEST_MAX_BYTES"
+    if grep -q "socket.request.max.bytes" "$propertiesFile"; then
+        sed -r -i "s/(#?)(socket.request.max.bytes)=(.*)/\2=$SOCKET_REQUEST_MAX_BYTES/g" "$propertiesFile"
+    else
+        echo "" >> "$propertiesFile"
+        echo "socket.request.max.bytes=$SOCKET_REQUEST_MAX_BYTES" >> "$propertiesFile"
     fi
 fi
 
