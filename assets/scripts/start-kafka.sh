@@ -73,7 +73,7 @@ fi
 # Enable/disable auto creation of topics
 if [ ! -z "$AUTO_CREATE_TOPICS" ]; then
     echo "auto.create.topics.enable: $AUTO_CREATE_TOPICS"
-    echo "\nauto.create.topics.enable=$AUTO_CREATE_TOPICS" >> $KAFKA_HOME/config/server.properties
+    echo "auto.create.topics.enable=$AUTO_CREATE_TOPICS" >> $KAFKA_HOME/config/server.properties
 fi
 
 # Run Kafka
