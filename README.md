@@ -45,3 +45,21 @@ https://hub.docker.com/r/johnnypark/kafka-zookeeper/
 Credits
 -------
 Originally cloned and inspired by https://github.com/spotify/docker-kafka
+
+Multi Architecture Support
+--------------------------
+
+To create an image supporting multiple architectures, one needs to use `docker buildx` command,
+as defined in the Makefile.
+
+To build default Kafka version:
+
+```shell
+make buildx-publish
+```
+
+To build a different version:
+
+```shell
+KAFKA_VERSION=2.6.2 make buildx-publish
+```
