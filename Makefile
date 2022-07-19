@@ -21,10 +21,16 @@ BUILDER ?= builder-local
 KAFKA_VERSION ?= 2.6.0
 
 # TAG
-TAG = dougdonohoe/kafka-zookeeper:$(KAFKA_VERSION)
+TAG = $(REPO_NAME)/kafka-zookeeper:$(KAFKA_VERSION)
+
+require_repo_name:
+ifndef REPO_NAME
+	$(error REPO_NAME not set)
+endif
 
 # common setup for buildx tasks
 buildx-setup:
+	@echo "Current buildx builders:"
 	$(DOCKER) buildx ls
 	@if ! $(DOCKER) buildx inspect --builder $(BUILDER) > /dev/null 2>&1; then \
   		echo "Creating new builder '$(BUILDER)'"; \
@@ -34,7 +40,7 @@ buildx-setup:
 	fi
 
 ## buildx-publish: build and publish the multi-architecture image (amd64|arm64)
-buildx-publish:
+buildx-publish: require_repo_name buildx-setup
 	@echo '=> Build and publish multi-arch image $(TAG)...'
 	$(DOCKER) buildx build --file Dockerfile \
 		--platform $(PLATFORMS) \
