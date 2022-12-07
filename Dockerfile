@@ -3,16 +3,17 @@ FROM alpine:3.9.2
 
 RUN apk add --update openjdk8-jre supervisor bash gcompat
 
-ENV ZOOKEEPER_VERSION 3.4.13
+ENV ZOOKEEPER_VERSION 3.6.3
 ENV ZOOKEEPER_HOME /opt/zookeeper-"$ZOOKEEPER_VERSION"
 
-RUN wget -q http://archive.apache.org/dist/zookeeper/zookeeper-"$ZOOKEEPER_VERSION"/zookeeper-"$ZOOKEEPER_VERSION".tar.gz -O /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
+RUN wget -q http://archive.apache.org/dist/zookeeper/zookeeper-"$ZOOKEEPER_VERSION"/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin.tar.gz -O /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
 RUN ls -l /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
 RUN tar xfz /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz -C /opt && rm /tmp/zookeeper-"$ZOOKEEPER_VERSION".tgz
+RUN mv /opt/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin /opt/zookeeper-"$ZOOKEEPER_VERSION"
 ADD assets/conf/zoo.cfg $ZOOKEEPER_HOME/conf
 
-ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 2.3.1
+ENV SCALA_VERSION 2.13
+ENV KAFKA_VERSION 3.1.2
 ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 ENV KAFKA_DOWNLOAD_URL https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
